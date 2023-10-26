@@ -15,13 +15,11 @@
     </properties>
 
     <dependencies>
-        <!-- JPA 하이버네이트 -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.3.10.Final</version>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.2.6.Final</version>
         </dependency>
-        <!-- H2 데이터베이스 -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
