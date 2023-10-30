@@ -7,7 +7,19 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMBER_ID")
     private Long id;
+    @ManyToOne //관계가 무엇인지.
+    @JoinColumn(name = "TEAM_ID") // 조인할 컬럼명
+    private Team team;
     private String name;
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     private String city;
     private String street;
     private String zipcode;

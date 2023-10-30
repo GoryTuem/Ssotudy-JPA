@@ -12,10 +12,12 @@ public class Order {
     @GeneratedValue()
     @Column(name = "ORDER_ID")
     private Long id;
-    @Id
-    @GeneratedValue()
+    /* 객체를 테이블에 맞추어 모델링 => 잘못된 설계!!
     @Column(name = "MEMBER_ID")
-    private Long memberId;
+    private Long memberId;*/
+    @ManyToOne //다대일
+    @JoinColumn(name="MEMBER_ID")
+    private Member member;
     private LocalDateTime orderDate;
     @Enumerated(EnumType.STRING)
     private orderStatus status;
@@ -28,13 +30,13 @@ public class Order {
         this.id = id;
     }
 
-    public Long getMemberId() {
+/*    public Long getMemberId() {
         return memberId;
-    }
+    }*/
 
-    public void setMemberId(Long memberId) {
+/*    public void setMemberId(Long memberId) {
         this.memberId = memberId;
-    }
+    }*/
 
     public LocalDateTime getOrderDate() {
         return orderDate;
