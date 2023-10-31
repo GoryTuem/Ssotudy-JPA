@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jpabook.shop.domain.Member;
+import jpabook.shop.domain.Movie;
 import jpabook.shop.domain.Order;
 import jpabook.shop.domain.Team;
 
@@ -18,17 +19,15 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            Team team = new Team();
-            team.setName("TeamC");
-            em.persist(team);
+            Movie movie = new Movie();
+            movie.setDirector("aa");
+            movie.setActor("bb");
+            movie.setName("바람과함께 사라지다");
+            movie.setPrice(1000);
+            em.persist(movie);
 
-            Member member = new Member();
-            member.setName("Member3");
-            /* 중요@ 연관 관계 주인에 속한 객체에 set 해줘야함.
-               저장시 틀린 예시 team.getMembers().add(member) => 디비에 저장 안됨.
-             */
-            member.changeTeam(team);
-            em.persist(member);
+            em.flush();
+            em.clear();
 
 
             tx.commit();

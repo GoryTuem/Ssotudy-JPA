@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity{
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMBER_ID")
     private Long id;
@@ -15,6 +15,9 @@ public class Member {
     private Team team;
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
     private String name;
     private String city;
     private String street;
