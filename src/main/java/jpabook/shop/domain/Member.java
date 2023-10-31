@@ -10,12 +10,12 @@ public class Member extends BaseEntity{
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMBER_ID")
     private Long id;
-    @ManyToOne //관계가 무엇인지.
+    @ManyToOne( fetch = FetchType.LAZY) //team을 프록시로 조회, 실제사용하는 시점에 초기화
     @JoinColumn(name = "TEAM_ID") // 조인할 컬럼명
     private Team team;
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
-    @OneToOne
+    @OneToOne( fetch = FetchType.LAZY)
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
     private String name;

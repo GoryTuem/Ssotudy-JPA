@@ -17,12 +17,12 @@ public class Order extends BaseEntity{
     /* 객체를 테이블에 맞추어 모델링 => 잘못된 설계!!
     @Column(name = "MEMBER_ID")
     private Long memberId;*/
-    @ManyToOne //다대일
+    @ManyToOne( fetch = FetchType.LAZY) //다대일
     @JoinColumn(name="MEMBER_ID")
     private Member member;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
-    @OneToOne
+    @OneToOne( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
     private LocalDateTime orderDate;

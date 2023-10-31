@@ -19,15 +19,19 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
-            Movie movie = new Movie();
-            movie.setDirector("aa");
-            movie.setActor("bb");
-            movie.setName("바람과함께 사라지다");
-            movie.setPrice(1000);
-            em.persist(movie);
+           Member member = new Member();
+           member.setName("소희");
+           em.persist(member);
 
-            em.flush();
-            em.clear();
+           em.flush();
+           em.clear();
+
+            //Member findMsember = em.find(Member.class, member.getId());
+
+            Member findMsember = em.getReference(Member.class, member.getId());
+            //getReference 는 실제 사용되는 시점에 조회를 함.
+            System.out.println("findMember" + findMsember.getName());
+
 
 
             tx.commit();
