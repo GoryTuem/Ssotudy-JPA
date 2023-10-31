@@ -4,6 +4,8 @@ import OrderStatus.orderStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -18,6 +20,8 @@ public class Order {
     @ManyToOne //다대일
     @JoinColumn(name="MEMBER_ID")
     private Member member;
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems = new ArrayList<>();
     private LocalDateTime orderDate;
     @Enumerated(EnumType.STRING)
     private orderStatus status;
@@ -30,13 +34,6 @@ public class Order {
         this.id = id;
     }
 
-/*    public Long getMemberId() {
-        return memberId;
-    }*/
-
-/*    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
-    }*/
 
     public LocalDateTime getOrderDate() {
         return orderDate;
@@ -52,5 +49,10 @@ public class Order {
 
     public void setStatus(orderStatus status) {
         this.status = status;
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
     }
 }

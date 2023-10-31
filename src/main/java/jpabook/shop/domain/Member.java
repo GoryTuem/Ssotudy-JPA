@@ -2,6 +2,9 @@ package jpabook.shop.domain;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -10,19 +13,13 @@ public class Member {
     @ManyToOne //관계가 무엇인지.
     @JoinColumn(name = "TEAM_ID") // 조인할 컬럼명
     private Team team;
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
     private String name;
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
     private String city;
     private String street;
     private String zipcode;
+
 
     public Long getId() {
         return id;
@@ -63,4 +60,14 @@ public class Member {
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
     }
+    public Team getTeam() {
+        return team;
+    }
+
+    public void changeTeam(Team team) { // 연관 관계 객체일 경우 set 대신 다른 이름으로 저장하는거 추천!
+        this.team = team;
+        //연관 관계 편의 메소드 : 객체 지향 측면, 테스트시 양방향일 경우 양쪽에 다 값을 설정!
+        team.getMembers().add(this);
+    }
+
 }
