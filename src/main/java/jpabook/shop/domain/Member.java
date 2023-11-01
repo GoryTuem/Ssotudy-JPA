@@ -3,10 +3,11 @@ package jpabook.shop.domain;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-@Entity
-public class Member extends BaseEntity{
+public class Member{
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "MEMBER_ID")
     private Long id;
@@ -19,9 +20,32 @@ public class Member extends BaseEntity{
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
+
+    //임베디드타입
+    @Embedded
+    private Period workPeriod;
+    @Embedded
+    private Address homeAddress;
+
+    //Adress가 2개라면?  => AttributeOverrides, AttributeOverride 사용해서 컬럼명 재 정의
+    @Embedded
+    @AttributeOverrides({@AttributeOverride(name = "city",column = @Column(name = "EMP_CITY")),
+            @AttributeOverride(name = "street",column = @Column(name = "EMP_STREET")),
+            @AttributeOverride(name = "zipcode",column = @Column(name = "EMP_ZIPCODE"))})
+    private Address workAddress;
+
+/*
+   **** 값 타입을 하나 이상 저장할 때 사용
+*/
+    @ElementCollection
+    @CollectionTable(name = "FAVORITE_FOOD"
+            , joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    @Column(name = "FOOD_NAME")
+    private Set<String> favoriteFoods = new HashSet<>();
+    @ElementCollection // => 수정시 테이블 전체 delete하고 다시 insert
+    @CollectionTable(name = "ADDRESS"
+            , joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    private List<Address> addressHistory = new ArrayList<>();
 
 
     public Long getId() {
@@ -40,29 +64,6 @@ public class Member extends BaseEntity{
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
     public Team getTeam() {
         return team;
     }
@@ -73,4 +74,63 @@ public class Member extends BaseEntity{
         team.getMembers().add(this);
     }
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public Locker getLocker() {
+        return locker;
+    }
+
+    public void setLocker(Locker locker) {
+        this.locker = locker;
+    }
+
+    public Period getWorkPeriod() {
+        return workPeriod;
+    }
+
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public Address getWorkAddress() {
+        return workAddress;
+    }
+
+    public void setWorkAddress(Address workAddress) {
+        this.workAddress = workAddress;
+    }
+
+    public Set<String> getFavoriteFoods() {
+        return favoriteFoods;
+    }
+
+    public void setFavoriteFoods(Set<String> favoriteFoods) {
+        this.favoriteFoods = favoriteFoods;
+    }
+
+    public List<Address> getAddressHistory() {
+        return addressHistory;
+    }
+
+    public void setAddressHistory(List<Address> addressHistory) {
+        this.addressHistory = addressHistory;
+    }
 }

@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Table(name = "orders")
 public class Order extends BaseEntity{
     @Id

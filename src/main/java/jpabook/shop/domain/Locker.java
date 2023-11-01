@@ -2,7 +2,6 @@ package jpabook.shop.domain;
 
 import jakarta.persistence.*;
 
-@Entity
 public class Locker extends BaseEntity{
     @Id @GeneratedValue()
     @Column(name = "LOCKER_ID")

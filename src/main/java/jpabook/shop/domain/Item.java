@@ -2,7 +2,6 @@ package jpabook.shop.domain;
 
 import jakarta.persistence.*;
 
-@Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn
 public abstract class Item extends BaseEntity{
