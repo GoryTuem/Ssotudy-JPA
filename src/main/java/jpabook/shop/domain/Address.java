@@ -5,6 +5,7 @@ import jakarta.persistence.Embeddable;
 import java.util.HashMap;
 import java.util.Objects;
 
+@Embeddable
 public class Address {
     private String city;
     private String street;
